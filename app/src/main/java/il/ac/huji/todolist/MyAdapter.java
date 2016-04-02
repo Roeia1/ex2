@@ -1,30 +1,23 @@
 package il.ac.huji.todolist;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * Created by Roei Avrahami on 08/03/2016.
  */
-public class MyAdapter extends ArrayAdapter<Pair<String,Date>> {
+public class MyAdapter extends ArrayAdapter<Task> {
     Context context;
-    ArrayList<Pair<String,Date>> tasks;
+    ArrayList<Task> tasks;
     LayoutInflater inflater = null;
-    public MyAdapter(Context context, int resource, ArrayList<Pair<String,Date>> tasksArr) {
+    public MyAdapter(Context context, int resource, ArrayList<Task> tasksArr) {
         super(context, resource, tasksArr);
         this.context = context;
         this.tasks = tasksArr;
@@ -40,10 +33,9 @@ public class MyAdapter extends ArrayAdapter<Pair<String,Date>> {
         }
         TextView TodoTitle = (TextView)rowView.findViewById(R.id.txtTodoTitle);
         TextView TodoDate = (TextView)rowView.findViewById(R.id.txtTodoDueDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        TodoTitle.setText(tasks.get(position).first);
-        TodoDate.setText(sdf.format(tasks.get(position).second));
-        if(GregorianCalendar.getInstance().getTime().after(tasks.get(position).second))
+        TodoTitle.setText(tasks.get(position).getName());
+        TodoDate.setText(tasks.get(position).getDateStr());
+        if(GregorianCalendar.getInstance().getTime().after(tasks.get(position).getDate()))
         {
             rowView.setBackgroundColor(Color.rgb(229,36,36));
         }
